@@ -24,7 +24,7 @@ Acabas de entrar a **JJTapiaMX-Consulting**. Te asignan el sistema **ConciliaTDC
 | `03-Plan-de-Trabajo/` | Plan semana a semana, checklist de levantamiento y guía de sesiones técnicas |
 | `04-Toolkit-IA/` | Prompts para Copilotos y diseño de agentes de IA especializados |
 | `05-Plantillas/` | Plantillas vacías de todos los documentos a producir |
-| `06-Solucion-Referencia/` | La documentación "resuelta" — compárala con tu resultado |
+| `06-Solucion-Referencia/` | La documentación "resuelta" |
 
 ## Cómo trabajarlo
 
