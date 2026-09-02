@@ -27,7 +27,7 @@ Adjunto el programa COBOL CONCILI1.cbl. Actúa como analista técnico:
 Marca con [HIPÓTESIS] todo lo que no esté explícito en el código.
 ```
 
-> Pruébalo en el ejercicio con: `02-Sistema-ConciliaTDC/batch/CONCILI1.cbl`,
+> Pruébalo con: `02-Sistema-ConciliaTDC/batch/CONCILI1.cbl`,
 > luego con `db/schema.sql` y `api/openapi.yaml`.
 
 ## P2 — Estructurar notas de levantamiento desordenadas
