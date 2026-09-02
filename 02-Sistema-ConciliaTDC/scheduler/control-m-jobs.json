@@ -1,0 +1,47 @@
+{
+  "scheduler": "Control-M",
+  "aplicacion": "CONCILIATDC",
+  "descripcion": "Cadena nocturna de conciliación TDC",
+  "jobs": [
+    {
+      "nombre": "JOB_VALIDACION",
+      "horaProgramada": "01:30",
+      "descripcion": "Verifica que el archivo del procesador haya llegado completo y con formato válido",
+      "entrada": "BCT.PROD.TDC.TRANSAC.D<fecha>",
+      "salida": "Log de validación en spool",
+      "condicionesSalida": [
+        { "codigo": "RC=00", "accion": "Libera JOB_CONCILIACION" },
+        { "codigo": "RC=08", "accion": "DETIENE la cadena. Archivo no llegó o mal formado. Notificar a soporte." }
+      ]
+    },
+    {
+      "nombre": "JOB_CONCILIACION",
+      "horaProgramada": "02:00",
+      "dependeDe": ["JOB_VALIDACION"],
+      "descripcion": "Ejecuta CONCILI1 (COBOL): concilia transacciones contra DB2, aplica ajuste automático <= $0.99 y genera excepciones",
+      "entrada": "BCT.PROD.TDC.TRANSAC.D<fecha>",
+      "salidas": [
+        "BCT.PROD.TDC.CONCILIA.D<fecha> (conciliadas y ajustadas)",
+        "BCT.PROD.TDC.EXCEP.D<fecha> (excepciones)",
+        "Actualiza tablas CONCILIACIONES y EXCEPCIONES en DB2"
+      ],
+      "condicionesSalida": [
+        { "codigo": "RC=00", "accion": "Libera JOB_NOTIF_CONTA" },
+        { "codigo": "RC=08", "accion": "Fallo en PASO01. Verificar archivo de entrada ANTES de re-lanzar (INC-2041)" }
+      ],
+      "advertencias": [
+        "NO re-lanzar sin verificar corrida previa: duplica movimientos (INC-2019)"
+      ]
+    },
+    {
+      "nombre": "JOB_NOTIF_CONTA",
+      "horaProgramada": "03:00",
+      "dependeDe": ["JOB_CONCILIACION"],
+      "descripcion": "Genera y envía el archivo de conciliados a Contabilidad",
+      "entrada": "BCT.PROD.TDC.CONCILIA.D<fecha>",
+      "salida": "BCT.CTA.TDC.ENTRADA.D<fecha>"
+    }
+  ],
+  "calendario": "Lunes a sábado, días hábiles bancarios",
+  "ventanaCritica": "Debe terminar antes de las 07:00 (horario de analistas)"
+}

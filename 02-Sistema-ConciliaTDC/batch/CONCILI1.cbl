@@ -1,0 +1,100 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CONCILI1.
+      *****************************************************************
+      * CONCILI1 - CONCILIACION DE TRANSACCIONES TDC                  *
+      * LEE ARCHIVO DEL PROCESADOR, VALIDA Y ACTUALIZA DB2            *
+      * GENERA: ARCHIVO DE CONCILIADOS Y ARCHIVO DE EXCEPCIONES       *
+      * REGLA: DIFERENCIAS <= $0.99 SE AJUSTAN AUTOMATICAMENTE        *
+      *****************************************************************
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT TRANS-IN    ASSIGN TO TRANIN.
+           SELECT CONCIL-OUT  ASSIGN TO CONCOUT.
+           SELECT EXCEP-OUT   ASSIGN TO EXCEPOUT.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD  TRANS-IN.
+       01  REG-TRANS.
+           05 TR-ID            PIC X(16).
+           05 TR-CUENTA        PIC X(20).
+           05 TR-MONTO         PIC 9(9)V99.
+           05 TR-FECHA         PIC X(10).
+           05 TR-COMERCIO      PIC X(30).
+
+       FD  CONCIL-OUT.
+       01  REG-CONCIL         PIC X(80).
+
+       FD  EXCEP-OUT.
+       01  REG-EXCEP          PIC X(80).
+
+       WORKING-STORAGE SECTION.
+       01  WS-CONTADORES.
+           05 WS-LEIDAS        PIC 9(9) VALUE 0.
+           05 WS-CONCILIADAS   PIC 9(9) VALUE 0.
+           05 WS-EXCEPCIONES   PIC 9(9) VALUE 0.
+       01  WS-TOLERANCIA       PIC 9V99 VALUE 0.99.
+       01  WS-DIFERENCIA       PIC 9(9)V99.
+       01  WS-EOF              PIC X VALUE 'N'.
+       01  WS-ESTATUS-CONC     PIC X(10).
+
+       PROCEDURE DIVISION.
+       000-PRINCIPAL.
+           PERFORM 100-ABRIR-ARCHIVOS
+           PERFORM 200-PROCESAR UNTIL WS-EOF = 'S'
+           PERFORM 300-RESUMEN
+           PERFORM 400-CERRAR
+           STOP RUN.
+
+       100-ABRIR-ARCHIVOS.
+           OPEN INPUT TRANS-IN
+                OUTPUT CONCIL-OUT EXCEP-OUT.
+      *    SI EL ARCHIVO NO EXISTE, EL JOB TERMINA CON RC=08.
+
+       200-PROCESAR.
+           READ TRANS-IN
+               AT END MOVE 'S' TO WS-EOF
+               NOT AT END
+                   ADD 1 TO WS-LEIDAS
+                   PERFORM 210-VALIDAR-TRANSACCION
+           END-READ.
+
+       210-VALIDAR-TRANSACCION.
+      *    COMPARA MONTO DEL PROCESADOR CONTRA DB2 (TABLA TRANSACCIONES)
+           PERFORM 220-BUSCAR-EN-DB2
+           IF WS-DIFERENCIA = 0
+               MOVE 'CONCILIADA' TO WS-ESTATUS-CONC
+               PERFORM 230-ACTUALIZA-DB2
+               ADD 1 TO WS-CONCILIADAS
+           ELSE IF WS-DIFERENCIA <= WS-TOLERANCIA
+      *        REGLA DE NEGOCIO: AJUSTE AUTOMATICO DE CENTAVOS
+               MOVE 'AJUSTADA' TO WS-ESTATUS-CONC
+               PERFORM 230-ACTUALIZA-DB2
+               ADD 1 TO WS-CONCILIADAS
+           ELSE
+               MOVE 'EXCEPCION' TO WS-ESTATUS-CONC
+               PERFORM 240-ESCRIBE-EXCEPCION
+               ADD 1 TO WS-EXCEPCIONES
+           END-IF.
+
+       220-BUSCAR-EN-DB2.
+      *    EXEC SQL SELECT MONTO INTO :WS-MONTO-DB2
+      *    FROM TRANSACCIONES WHERE ID = :TR-ID END-EXEC
+           CONTINUE.
+
+       230-ACTUALIZA-DB2.
+      *    EXEC SQL UPDATE CONCILIACIONES
+      *    SET ESTATUS = :WS-ESTATUS-CONC END-EXEC
+           WRITE REG-CONCIL FROM REG-TRANS.
+
+       240-ESCRIBE-EXCEPCION.
+           WRITE REG-EXCEP FROM REG-TRANS.
+
+       300-RESUMEN.
+           DISPLAY 'TRANSACCIONES LEIDAS:      ' WS-LEIDAS.
+           DISPLAY 'TRANSACCIONES CONCILIADAS: ' WS-CONCILIADAS.
+           DISPLAY 'EXCEPCIONES GENERADAS:     ' WS-EXCEPCIONES.
+
+       400-CERRAR.
+           CLOSE TRANS-IN CONCIL-OUT EXCEP-OUT.

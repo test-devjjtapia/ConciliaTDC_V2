@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: ConciliaTDC API
+  description: |
+    API REST para consulta y reproceso de conciliaciones de tarjetas de crédito.
+    Consumida por la app móvil/web de analistas de conciliación.
+  version: 1.0.0
+servers:
+  - url: https://api-conciliatdc.bct.prod/v1
+
+paths:
+  /conciliaciones/{fecha}:
+    get:
+      summary: Consulta conciliaciones de una fecha de proceso
+      parameters:
+        - name: fecha
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2026-07-14"
+      responses:
+        '200':
+          description: Lista de conciliaciones del día
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Conciliacion'
+        '401':
+          description: Token expirado o inválido (ver INC-1987)
+        '404':
+          description: Sin datos para la fecha (¿corrió el batch?)
+
+  /excepciones:
+    get:
+      summary: Lista excepciones pendientes de revisión por el analista
+      parameters:
+        - name: estatus
+          in: query
+          schema:
+            type: string
+            enum: [PENDIENTE, EN_REVISION, RESUELTA]
+      responses:
+        '200':
+          description: Excepciones filtradas por estatus
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Excepcion'
+
+  /reproceso:
+    post:
+      summary: Solicita reproceso de una excepción revisada
+      description: |
+        SOLO para excepciones ya revisadas por un analista.
+        NO re-ejecuta el batch completo (ver INC-2019: riesgo de doble corrida).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                excepcionId:
+                  type: integer
+                accion:
+                  type: string
+                  enum: [ACEPTAR_DIFERENCIA, REPROCESAR]
+      responses:
+        '202':
+          description: Solicitud de reproceso aceptada
+        '409':
+          description: La excepción ya fue procesada
+
+components:
+  schemas:
+    Conciliacion:
+      type: object
+      properties:
+        id:
+          type: integer
+        transaccionId:
+          type: string
+        estatus:
+          type: string
+          description: Valores generados por el COBOL CONCILI1
+          enum: [CONCILIADA, AJUSTADA, EXCEPCION]
+        diferencia:
+          type: number
+    Excepcion:
+      type: object
+      properties:
+        id:
+          type: integer
+        transaccionId:
+          type: string
+        diferencia:
+          type: number
+        estatus:
+          type: string
+          enum: [PENDIENTE, EN_REVISION, RESUELTA]
