@@ -42,20 +42,6 @@ Acabas de entrar a **JJTapiaMX-Consulting**. Te asignan el sistema **ConciliaTDC
 
 ---
 
-## Resumen ejecutivo del enfoque (guion)
-
-### Versión corta (~90 segundos)
-
-> "Lo abordo en cuatro fases. **Primero, levantamiento de conocimiento**: trabajo con desarrollo, soporte, DBAs y usuarios con una guía de preguntas estructurada — funcional, técnica y operativa. **Segundo, investigación técnica directa**: reviso el repositorio, el esquema de la base de datos, los logs y la cadena de jobs para reconstruir el flujo real del sistema, porque la información inicial suele estar incompleta. **Tercero, estructuración**: convierto ese conocimiento disperso en documentos estándar — documento funcional, documento técnico, matriz de integraciones y dependencias, diagramas de procesos y arquitectura, y runbooks de soporte. **Cuarto, validación y transferencia**: reviso cada documento con los responsables técnicos antes de publicarlo en la wiki oficial.
->
-> Uso herramientas tradicionales —Confluence o wiki, Jira, DBeaver, Postman, draw.io o Mermaid— y también **Copilotos de IA para acelerar**: me ayudan a generar la primera hipótesis al leer código legacy, a estructurar notas desordenadas de levantamiento y a producir borradores de diagramas. Pero la regla es clara: la IA propone, el analista valida, y el experto técnico aprueba. La documentación oficial siempre pasa por validación humana.
->
-> Al final entrego algo más que documentos: un mapa de dependencias, puntos críticos y conocimiento que hoy está concentrado en personas — que es exactamente el riesgo que la empresa quiere eliminar."
-
-### Versión extendida
-
-Si te piden profundizar, usa el plan de `03-Plan-de-Trabajo/plan-3-semanas.md` como guion: describe la semana 1 (descubrimiento y personas), semana 2 (investigación técnica asistida por IA) y semana 3 (producción documental y validación), y cierra con los entregables concretos: qué documentos, en qué herramienta, con qué control de versiones.
-
 ### Principios que conectan con el objetivo del proyecto
 
 Úsalos como criterios de éxito:
