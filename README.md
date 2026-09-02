@@ -1,8 +1,4 @@
-# Ejercicio Práctico: Documentación de un Sistema sin Documentación
-
-> **Propósito:**
-> Practicar el rol de **Analista Documentador Técnico-Funcional** sobre un sistema ficticio pero realista, con enfoque en levantamiento, análisis, documentación y continuidad operativa.
-
+# Documentación de un Sistema sin Documentación
 ---
 
 ## El escenario
