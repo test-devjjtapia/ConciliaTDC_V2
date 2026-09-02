@@ -9,12 +9,8 @@
 ## P0 — Preparar una sesión de levantamiento
 
 ```
-Voy a realizar una sesión de levantamiento con el responsable de soporte de un sistema de conciliación
-bancaria compuesto por: app móvil, API REST (Flask), base de datos DB2 y
-proceso batch nocturno en Mainframe (COBOL/JCL con Control-M).
-Genera una guía de preguntas estructurada en tres bloques: funcional,
-técnico y operativo. Prioriza preguntas que revelen conocimiento no
-documentado y dependencias entre componentes.
+Voy a realizar una sesión de levantamiento con el responsable de soporte de un sistema de conciliación bancaria compuesto por: app móvil, API REST (Flask), base de datos DB2 y
+proceso batch nocturno en Mainframe (COBOL/JCL con Control-M). Genera una guía de preguntas estructurada en tres bloques: funcional, técnico y operativo. Prioriza preguntas que revelen conocimiento no documentado y dependencias entre componentes.
 ```
 
 ## P1 — Analizar código / DDL / especificación
@@ -48,9 +44,7 @@ Si algo es ambiguo o contradictorio, márcalo como [VERIFICAR].
 ## P3 — Convertir una sesión de soporte en runbook
 
 ```
-Con base en estos tickets de incidentes y estas notas de soporte, genera un
-borrador de runbook con el formato: Síntoma / Componentes involucrados /
-Validaciones paso a paso / Resolución / Escalamiento / Qué NO hacer.
+Con base en estos tickets de incidentes y estas notas de soporte, genera un borrador de runbook con el formato: Síntoma / Componentes involucrados / Validaciones paso a paso / Resolución / Escalamiento / Qué NO hacer.
 Usa solo la información proporcionada; marca los huecos como [PENDIENTE].
 ```
 
