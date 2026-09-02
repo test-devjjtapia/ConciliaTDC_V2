@@ -36,7 +36,7 @@
 > **Punto crítico del proyecto:** Ricardo es un *Single Point of Knowledge*.
 > Parte de tu trabajo es convertir lo que está en su cabeza en un runbook.
 
-## Reglas del ejercicio
+## Reglas
 
 1. No modifiques los archivos de `02-Sistema-ConciliaTDC/` — son el "sistema en producción".
 2. Documenta solo lo que puedas **evidenciar** (código, logs, tickets, sesiones de levantamiento).
