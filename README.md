@@ -15,7 +15,7 @@ Acabas de entrar a **JJTapiaMX-Consulting**. Te asignan el sistema **ConciliaTDC
 
 ---
 
-## Estructura del ejercicio
+## Estructura
 
 | Carpeta | Contenido |
 |---|---|
@@ -26,7 +26,7 @@ Acabas de entrar a **JJTapiaMX-Consulting**. Te asignan el sistema **ConciliaTDC
 | `05-Plantillas/` | Plantillas vacías de todos los documentos a producir |
 | `06-Solucion-Referencia/` | La documentación "resuelta" — compárala con tu resultado |
 
-## Cómo trabajar el ejercicio
+## Cómo trabajarlo
 
 1. **Lee el escenario** (`01-Escenario/`) sin abrir todavía el código.
 2. **Sigue el plan** (`03-Plan-de-Trabajo/plan-3-semanas.md`) fase por fase.
