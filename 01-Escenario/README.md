@@ -24,7 +24,7 @@
 | Log de fallo del batch | `logs/batch-error.log` | Trazabilidad de un incidente real |
 | Código fuente y configuración | `../02-Sistema-ConciliaTDC/` | La verdad técnica del sistema |
 
-## Personas clave (stakeholders simulados)
+## Personas clave (stakeholders)
 
 | Persona | Rol | Qué sabe |
 |---|---|---|
