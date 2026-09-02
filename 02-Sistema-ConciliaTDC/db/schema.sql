@@ -1,5 +1,5 @@
 -- ConciliaTDC - Esquema de base de datos (extraído con DBeaver)
--- Motor: DB2 (compatible con sintaxis SQL estándar para el ejercicio)
+-- Motor: DB2 (compatible con sintaxis SQL estándar)
 
 -- Tabla principal: transacciones reportadas por el procesador
 CREATE TABLE TRANSACCIONES (
