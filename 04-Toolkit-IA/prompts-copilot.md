@@ -1,4 +1,4 @@
-# Prompts para Copilotos de IA — listos para usar en el ejercicio
+# Prompts para Copilotos de IA — listos para usar
 
 > Filosofía: **la IA genera la primera hipótesis; el analista valida contra
 > evidencia; el experto aprueba.** Ningún texto generado por IA va directo
