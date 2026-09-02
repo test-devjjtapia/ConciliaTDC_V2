@@ -1,4 +1,4 @@
-# Tickets históricos (exportación simulada de Jira)
+# Tickets históricos (exportación de Jira)
 
 ---
 
